@@ -67,7 +67,7 @@ public class JwtAuthUtil {
     }
 
     public Long extractUserIdFromAccessToken(String accessToken) {
-        return extractAllClaimsFromAccessToken(accessToken).get("userId", Long.class);
+        return extractAllClaimsFromAccessToken(accessToken).get("user_id", Long.class);
     }
 
     public Boolean isAccessTokenExpired(String accessToken) {
@@ -126,7 +126,7 @@ public class JwtAuthUtil {
     }
 
     public Boolean isRefreshTokenValid(String refreshToken, User user) {
-        return (extractAllClaimsFromRefreshToken(refreshToken).getSubject().equals(user.getEmail()))
+        return extractUsernameFromRefreshToken(refreshToken).equals(user.getEmail())
                 && (!isAccessTokenExpired(refreshToken));
     }
 
